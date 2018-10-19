@@ -28,6 +28,9 @@ namespace twozerofoureight
         public void Notify(Model m)
         {
             UpdateBoard(((TwoZeroFourEightModel)m).GetBoard());
+            UpdateGameOver(((TwoZeroFourEightModel)m).checkGameOver());
+            UpdateScore(((TwoZeroFourEightModel)m).getScore());
+            UpdateGameOverFull(((TwoZeroFourEightModel)m).CheckGameOverFull());
         }
 
         private void UpdateTile(Label l, int i)
@@ -79,6 +82,35 @@ namespace twozerofoureight
             UpdateTile(lbl33, board[3, 3]);
         }
 
+        private void UpdateScore(int score)
+        {
+            lblScore.Text = Convert.ToString(score);
+        }
+
+        private void UpdateGameOverFull(bool check)
+        {
+            if (check == true)
+            {
+                GAMEOver.Text = "GAME OVER!!";
+                btnUp.Enabled = false;
+                btnDown.Enabled = false;
+                btnRight.Enabled = false;
+                btnLeft.Enabled = false;
+            }
+        }
+
+        private void UpdateGameOver(bool check)
+        {
+            if (check == true)
+            {
+                GAMEOver.Text = "YOU ARE WINNER!!";
+                btnUp.Enabled = false;
+                btnDown.Enabled = false;
+                btnRight.Enabled = false;
+                btnLeft.Enabled = false;
+            }
+        }
+
         private void btnLeft_Click(object sender, EventArgs e)
         {
             controller.ActionPerformed(TwoZeroFourEightController.LEFT);
@@ -98,6 +130,52 @@ namespace twozerofoureight
         {
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
+
+        private void TwoZeroFourEightView_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+                case Keys.W:
+                case Keys.Up:
+                    controller.ActionPerformed(TwoZeroFourEightController.UP);
+                    break;
+                case Keys.S:
+                case Keys.Down:
+                    controller.ActionPerformed(TwoZeroFourEightController.DOWN);
+                    break;
+                case Keys.A:
+                case Keys.Left:
+                    controller.ActionPerformed(TwoZeroFourEightController.LEFT);
+                    break;
+                case Keys.D:
+                case Keys.Right:
+                    controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+                    break;
+
+            }
+        }
+
+        private void btnDown_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TwoZeroTwoZeroFourEightView_PreviewKeyDown(sender, e);
+
+        }
+
+        private void TwoZeroTwoZeroFourEightView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Right:
+                case Keys.Left:
+                    e.IsInputKey = true;
+                    break;
+            }
+
+
+        }
+
 
     }
 }
