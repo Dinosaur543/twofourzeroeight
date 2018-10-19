@@ -54,7 +54,7 @@ namespace twozerofoureight
             }
         }
 
-        public bool checkGameOver()
+        public bool checkGameOver() //check when user can't move
         {
             var range = Enumerable.Range(0, boardSize);
 
@@ -159,15 +159,12 @@ namespace twozerofoureight
             HandleChanges(changed);
         }
 
-
-
-
-        public bool CheckGameOverFull()
+                
+        public bool CheckGameOverFull() //check all of table 
         {
             int count = 0;
-
-
-            for (int i = 0; i < 4; i++)
+            
+            for (int i = 0; i < 4; i++) //table have 4*4 
             {
                 for (int j = 0; j < 4; j++)
                 {
@@ -184,45 +181,45 @@ namespace twozerofoureight
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        //First row
-                        if (i == 0 && j == 0) //#1
+                        //Row 1
+                        if (i == 0 && j == 0) //[0,0]                                                  // [ i,j ]  [ i,j+1 ]
                         {
-                            if (board[i, j] == board[i, j + 1] || board[i, j] == board[i + 1, j])
+                            if ( board[i, j] == board[i + 1, j] || board[i, j] == board[i, j + 1] )    // [i+1,j]
                             {
                                 return false;
                             }
                         }
-                        else if (i == 0 && j != 0 && j != boardSize - 1) //#2,3
+                        else if (i == 0 && j != 0 && j != boardSize - 1) //[0,1]                                                       //           [i+1,j]          
                         {
-                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i, j + 1] || board[i, j] == board[i + 1, j])
+                            if (board[i, j] == board[i, j + 1] || board[i, j] == board[i, j - 1] ||  board[i, j] == board[i + 1, j])   // [i,j-1]   [ i,j ]  [i,j+1]
+                            {
+                                return false;                                                                                          //[]
+                            }
+                        }
+                        else if (  i != 0 && j == 0 && i != boardSize - 1) //[1,0]
+                        {
+                            if (board[i, j] == board[i + 1, j] ||  board[i, j] == board[i - 1, j] || board[i, j] == board[i, j + 1] )
                             {
                                 return false;
                             }
                         }
-                        else if (i == 0 && j == boardSize - 1) //#4
+                        else if (i == 0 && j == boardSize - 1) 
                         {
-                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i + 1, j])
+                            if (board[i, j] == board[i, j - 1] || board[i + 1, j] == board[i, j]  )
                             {
                                 return false;
                             }
                         }
-                        //Second Row and Third Row
-                        else if (j == 0 && i != 0 && i != boardSize - 1) //#1
+                                      
+                        else if (j == boardSize - 1&& i != boardSize - 1 && i != 0 ) 
                         {
-                            if (board[i, j] == board[i + 1, j] || board[i, j] == board[i, j + 1] || board[i, j] == board[i - 1, j])
+                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i + 1, j] || board[i, j] == board[i - 1, j])
                             {
                                 return false;
                             }
                         }
-                        //Second Row and Third Row
-                        else if (j == boardSize - 1 && i != 0 && i != boardSize - 1) //#4
-                        {
-                            if (board[i, j] == board[i + 1, j] || board[i, j] == board[i, j - 1] || board[i, j] == board[i - 1, j])
-                            {
-                                return false;
-                            }
-                        }
-                        //Forth Row
+
+                        //Row4 
                         else if (i == boardSize - 1 && j == 0)
                         {
                             if (board[i, j] == board[i, j + 1] || board[i, j] == board[i - 1, j])
@@ -230,23 +227,23 @@ namespace twozerofoureight
                                 return false;
                             }
                         }
-                        else if (i == boardSize - 1 && j != 0 && j != boardSize - 1) //#2,3
+                        else if (i == boardSize - 1 && j == boardSize - 1) 
                         {
-                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i, j + 1] || board[i, j] == board[i - 1, j])
+                            if ( board[i, j] == board[i - 1, j] || board[i, j] == board[i, j - 1] )
                             {
                                 return false;
                             }
                         }
-                        else if (i == boardSize - 1 && j == boardSize - 1) //#1
+                        else if (i == boardSize - 1 && j != 0 && j != boardSize - 1) 
                         {
-                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i - 1, j])
+                            if (board[i, j] == board[i, j + 1] || board[i, j] == board[i, j - 1] || board[i, j] == board[i - 1, j])
                             {
                                 return false;
                             }
                         }
                         else
                         {
-                            if (board[i, j] == board[i, j - 1] || board[i, j] == board[i, j + 1] || board[i, j] == board[i + 1, j] || board[i, j] == board[i - 1, j])
+                            if (board[i, j] == board[i, j + 1] || board[i, j] == board[i, j - 1] || board[i, j] == board[i + 1, j] || board[i, j] == board[i - 1, j])
                             {
                                 return false;
                             }
